@@ -6,7 +6,7 @@ package r6.fram;
  * @author sunny
  *
  */
-public class Ray implements IIntersectable{
+public class Ray implements IIntersectable {
 	private final double m;
 	private final double x1;
 	private final double y1;
@@ -160,8 +160,15 @@ public class Ray implements IIntersectable{
 
 	@Override
 	public double getXInt(Ray r) throws LineException {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		//if parallel
+		
+
+		double xint = (m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
+		
+		
+
+		return xint;
 	}
 
 	@Override
