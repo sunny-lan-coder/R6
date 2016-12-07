@@ -1,5 +1,6 @@
 package r6tk.r6;
 
+import r6tk.r6.geom.IIntersectable;
 import r6tk.r6.geom.Ray;
 
 /**
@@ -9,7 +10,7 @@ import r6tk.r6.geom.Ray;
  * @author sunny
  *
  */
-public interface ICollideable {
+public interface ICollideable extends IIntersectable{
 
 	public Ray applyTransformation(Ray r) throws R6Exception;
 }
