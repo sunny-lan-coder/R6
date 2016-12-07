@@ -119,11 +119,15 @@ public class Ray implements IIntersectable {
 	 * @throws R6Exception
 	 */
 	public double x(double y) throws R6Exception {
-		if (pointsPositive) {
-			if (y < y1)
-				throw new R6Exception(R6Error.not_on_line);
-		} else {
+		
+		if (pointsPositive ^ (m < 0)) {
 			if (y > y1)
+				throw new R6Exception(R6Error.not_on_line);
+		}else if(m==0){
+			
+		}
+		else {
+			if (y < y1)
 				throw new R6Exception(R6Error.not_on_line);
 		}
 		if (vertical)
@@ -133,6 +137,7 @@ public class Ray implements IIntersectable {
 				throw new R6Exception(R6Error.infinite_solutions);
 			else
 				throw new R6Exception(R6Error.no_solutions);
+
 		return (y - y1) / m + x1;
 	}
 
@@ -145,6 +150,12 @@ public class Ray implements IIntersectable {
 	 * @throws R6Exception
 	 */
 	public double y(double x) throws R6Exception {
+		if (vertical)
+			if (x == x1)
+				throw new R6Exception(R6Error.infinite_solutions);
+			else
+				throw new R6Exception(R6Error.no_solutions);
+
 		if (pointsPositive) {
 			if (x < x1)
 				throw new R6Exception(R6Error.not_on_line);
@@ -152,11 +163,7 @@ public class Ray implements IIntersectable {
 			if (x > x1)
 				throw new R6Exception(R6Error.not_on_line);
 		}
-		if (vertical)
-			if (x == x1)
-				throw new R6Exception(R6Error.infinite_solutions);
-			else
-				throw new R6Exception(R6Error.no_solutions);
+
 		return m * (x - x1) + y1;
 	}
 

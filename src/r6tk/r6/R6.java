@@ -9,15 +9,17 @@ public class R6 {
 	List<LightRay> rays;
 	List<ICollideable> transforms;
 	List<IR6Listener> listeners;
-	List<Object> objects;
+	public final List<Object> objects;
 
 	public R6() {
 		transforms = new ArrayList<>();
 		rays = new ArrayList<>();
 		objects = new ArrayList<>();
+		listeners = new ArrayList<>();
 	}
 
 	public void add(LightRay ray) throws R6Exception {
+		System.out.println("c");
 		rays.add(ray);
 		objects.add(ray);
 		update();
@@ -66,6 +68,7 @@ public class R6 {
 			}
 			double dist = Math
 					.sqrt(Math.pow(Math.abs(ray.head.x1() - xint), 2) + Math.pow(Math.abs(ray.head.y1() - yint), 2));
+			if(dist==0)continue;
 			if (min == null) {
 				min = object;
 				mindist = dist;
@@ -83,14 +86,15 @@ public class R6 {
 
 	public void trace(LightRay ray) throws R6Exception {
 		LightRay currentRay = ray;
-		while (true) {
+		outer: while (true) {
 			LightRay nextRay;
 			try {
 				nextRay = findReflection(currentRay);
 			} catch (R6Exception e) {
-				if (e.e == R6Error.no_collision)
-					break;
-				else
+				if (e.e == R6Error.no_collision){
+					System.out.println("b");
+					break outer;
+				}	else
 					throw new R6Exception(R6Error.friendship_is_magic);
 			}
 			currentRay.bounce = nextRay;
@@ -99,8 +103,10 @@ public class R6 {
 	}
 
 	public void update() throws R6Exception {
-		for (LightRay ray : rays)
+		for (LightRay ray : rays){
+			System.out.println("a");
 			trace(ray);
+		}
 
 		for (IR6Listener listener : listeners)
 			listener.update();

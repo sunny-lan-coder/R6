@@ -3,7 +3,7 @@ package r6tk.g6.b6;
 import java.awt.Color;
 
 import r6tk.b6.PlaneMirror;
-import r6tk.g6.G6Engine;
+import r6tk.g6.G6;
 import r6tk.g6.IRenderable;
 import r6tk.r6.R6Exception;
 
@@ -22,7 +22,7 @@ public class RenderablePlaneMirror extends PlaneMirror implements IRenderable {
 	}
 
 	@Override
-	public void render(G6Engine engine) {
+	public void render(G6 engine) {
 		engine.getGfx().setColor(c);
 		engine.getGfx().drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 	}

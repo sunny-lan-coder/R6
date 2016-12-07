@@ -7,5 +7,5 @@ package r6tk.g6;
  *
  */
 public interface IRenderable {
-	public void render(G6Engine engine);
+	public void render(G6 engine);
 }

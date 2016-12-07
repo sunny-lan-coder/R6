@@ -1,25 +1,28 @@
 package r6tk.g6;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
 
-public class G6Engine {
-	public final List<IRenderable> objects;
+import r6tk.r6.R6;
+
+public class G6 {
 	private Graphics g;
 	private double height;
 	private double width;
+	private R6 engine;
 
-	public G6Engine(double height, double width) {
-		objects = new ArrayList<>();
+	public G6(R6 engine, double height, double width) {
 		this.height = height;
+		this.engine = engine;
 		this.width = width;
 	}
 
 	public void render(Graphics g) {
-		this.g = g;
-		for (IRenderable object : objects)
-			object.render(this);
+		this.g=g;
+		for (Object o : engine.objects) {
+			if (o instanceof IRenderable) {
+				((IRenderable) o).render(this);
+			}
+		}
 	}
 
 	public double height() {
