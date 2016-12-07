@@ -158,23 +158,134 @@ public class Ray implements IIntersectable {
 		return m * (x - x1) + y1;
 	}
 
+	public boolean vertical() {
+		return vertical;
+	}
+
 	@Override
 	public double getXInt(Ray r) throws LineException {
-		
-		//if parallel
-		
 
-		double xint = (m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
-		
-		
+		double xint;
+
+		// if parallel
+		if (r.m == m) {
+			if (r.b() == b())
+				throw new LineException(Error.infinite_solutions);
+			else
+				throw new LineException(Error.no_solutions);
+		}
+		if (r.vertical && vertical) {
+			if (r.x1() == x1) {
+				if (pointsPositive) {
+					if (r.y1() > y1)
+						throw new LineException(Error.infinite_solutions);
+					if (r.y1() < y1)
+						throw new LineException(Error.no_solutions);
+
+				} else {
+					if (r.y1() < y1)
+						throw new LineException(Error.infinite_solutions);
+					if (r.y1() > y1)
+						throw new LineException(Error.no_solutions);
+				}
+			} else
+				throw new LineException(Error.no_solutions);
+		}
+
+		if (vertical) {
+			xint = x1;
+		} else if (r.vertical) {
+			xint = r.x1;
+		} else {
+			xint = (m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
+		}
+
+		double yinta;
+		double yintb;
+
+		try {
+			yinta = y(xint);
+		} catch (LineException e) {
+			if (e.e == Error.behind_line)
+				throw new LineException(Error.no_solutions);
+			else
+				throw new LineException(Error.friendship_is_magic);
+		}
+		try {
+			yintb = r.y(xint);
+		} catch (LineException e) {
+			if (e.e == Error.behind_line)
+				throw new LineException(Error.no_solutions);
+			throw new LineException(Error.friendship_is_magic);
+		}
+
+		if (yinta != yintb)
+			throw new LineException(Error.friendship_is_magic);
 
 		return xint;
 	}
 
 	@Override
 	public double getYInt(Ray r) throws LineException {
-		// TODO Auto-generated method stub
-		return 0;
+
+		double xint;
+
+		// if parallel
+		if (r.m == m) {
+			if (r.b() == b())
+				throw new LineException(Error.infinite_solutions);
+			else
+				throw new LineException(Error.no_solutions);
+		}
+		if (r.vertical && vertical) {
+			if (r.x1() == x1) {
+				if (pointsPositive) {
+					if (r.y1() > y1)
+						throw new LineException(Error.infinite_solutions);
+					if (r.y1() < y1)
+						throw new LineException(Error.no_solutions);
+
+				} else {
+					if (r.y1() < y1)
+						throw new LineException(Error.infinite_solutions);
+					if (r.y1() > y1)
+						throw new LineException(Error.no_solutions);
+				}
+			} else
+				throw new LineException(Error.no_solutions);
+		}
+
+		if (vertical) {
+			xint = x1;
+		} else if (r.vertical) {
+			xint = r.x1;
+		} else {
+			xint = (m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
+		}
+
+		double yinta;
+		double yintb;
+
+		try {
+			yinta = y(xint);
+		} catch (LineException e) {
+			if (e.e == Error.behind_line)
+				throw new LineException(Error.no_solutions);
+			else
+				throw new LineException(Error.friendship_is_magic);
+		}
+		try {
+			yintb = r.y(xint);
+		} catch (LineException e) {
+			if (e.e == Error.behind_line)
+				throw new LineException(Error.no_solutions);
+			throw new LineException(Error.friendship_is_magic);
+		}
+
+		if (yinta != yintb)
+			throw new LineException(Error.friendship_is_magic);
+
+		return yinta;
 	}
 
 }

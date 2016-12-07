@@ -1,5 +1,8 @@
 package r6.fram;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+
 public class LineException extends Exception {
 
 	public final Error e;
@@ -18,6 +21,24 @@ public class LineException extends Exception {
 	public LineException(Error e) {
 		this.e = e;
 		this.source = null;
+	}
+
+	@Override
+	public void printStackTrace() {
+		System.err.println("LineError exception: " + e.toString());
+		super.printStackTrace();
+	}
+
+	@Override
+	public void printStackTrace(PrintWriter w) {
+		System.err.println("LineError exception: " + e.toString());
+		super.printStackTrace(w);
+	}
+
+	@Override
+	public void printStackTrace(PrintStream s) {
+		System.err.println("LineError exception: " + e.toString());
+		super.printStackTrace(s);
 	}
 
 }
