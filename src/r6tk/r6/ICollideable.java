@@ -1,6 +1,5 @@
 package r6tk.r6;
 
-import r6tk.r6.geom.LineException;
 import r6tk.r6.geom.Ray;
 
 /**
@@ -12,5 +11,5 @@ import r6tk.r6.geom.Ray;
  */
 public interface ICollideable {
 
-	public Ray applyTransformation(Ray r) throws LineException;
+	public Ray applyTransformation(Ray r) throws R6Exception;
 }
