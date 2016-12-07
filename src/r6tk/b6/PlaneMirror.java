@@ -29,8 +29,8 @@ public class PlaneMirror extends Line implements ICollideable {
 			else
 				throw new R6Exception(R6Error.friendship_is_magic);
 		}
-		
-		
+
+		return new Ray(r.m(), xint, yint, !r.pointsPositive());
 	}
 
 }

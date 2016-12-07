@@ -341,4 +341,22 @@ public class Ray implements IIntersectable {
 			throw new R6Exception(R6Error.friendship_is_magic);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Ray) {
+			Ray r = (Ray) o;
+			if (r.m == m && r.x1 == x1 && r.y1 == y1 && r.pointsPositive == pointsPositive) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Object clone() {
+		if (vertical)
+			return new Ray(x1, y1, pointsPositive);
+		return new Ray(m, x1, y1, pointsPositive);
+	}
+
 }
