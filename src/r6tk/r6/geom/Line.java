@@ -4,12 +4,12 @@ import r6tk.r6.R6Exception;
 
 public class Line implements IIntersectable {
 
-	private final double m;
-	private final double x1;
-	private final double y1;
-	private final double x2;
-	private final double y2;
-	private final boolean vertical;
+	protected final double m;
+	protected final double x1;
+	protected final double y1;
+	protected final double x2;
+	protected final double y2;
+	protected final boolean vertical;
 
 	/**
 	 * Construct a non vertical line

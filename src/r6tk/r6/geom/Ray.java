@@ -9,11 +9,11 @@ import r6tk.r6.R6Exception;
  *
  */
 public class Ray implements IIntersectable {
-	private final double m;
-	private final double x1;
-	private final double y1;
-	private final boolean vertical;
-	private final boolean pointsPositive;
+	protected final double m;
+	protected final double x1;
+	protected final double y1;
+	protected final boolean vertical;
+	protected final boolean pointsPositive;
 
 	/**
 	 * Construct a non vertical ray
