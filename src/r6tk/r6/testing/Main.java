@@ -1,7 +1,7 @@
-package r6.fram.testing;
+package r6tk.r6.testing;
 
-import r6.fram.LineException;
-import r6.fram.Ray;
+import r6tk.r6.geom.LineException;
+import r6tk.r6.geom.Ray;
 
 public class Main {
 

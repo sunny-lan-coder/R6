@@ -1,4 +1,6 @@
-package r6.fram;
+package r6tk.r6.geom;
+
+import r6tk.r6.Error;
 
 /**
  * A mathematical ray

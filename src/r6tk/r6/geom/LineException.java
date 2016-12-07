@@ -1,7 +1,9 @@
-package r6.fram;
+package r6tk.r6.geom;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+
+import r6tk.r6.Error;
 
 public class LineException extends Exception {
 

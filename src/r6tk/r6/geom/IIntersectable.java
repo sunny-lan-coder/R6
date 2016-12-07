@@ -1,4 +1,4 @@
-package r6.fram;
+package r6tk.r6.geom;
 
 /**
  * Anything whose point of intersection with a ray can be found

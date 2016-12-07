@@ -1,4 +1,7 @@
-package r6.fram;
+package r6tk.r6;
+
+import r6tk.r6.geom.LineException;
+import r6tk.r6.geom.Ray;
 
 /**
  * Any objects that interacts (causes a direction and/or point change) with a

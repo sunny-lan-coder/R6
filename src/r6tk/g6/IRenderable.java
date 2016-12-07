@@ -1,4 +1,4 @@
-package r6.g6;
+package r6tk.g6;
 
 /**
  * Any object that can be drawn using G6
