@@ -1,6 +1,7 @@
 package r6tk.b6;
 
 import r6tk.r6.ICollideable;
+import r6tk.r6.R6;
 import r6tk.r6.R6Exception;
 import r6tk.r6.geom.Line;
 import r6tk.r6.geom.R6Error;
@@ -30,7 +31,29 @@ public class PlaneMirror extends Line implements ICollideable {
 				throw new R6Exception(R6Error.friendship_is_magic);
 		}
 
-		return new Ray(-r.m(), xint, yint, !r.pointsPositive());
+		double incidentRayAngle = Math.atan(r.m());
+
+		if (!r.pointsPositive())
+			incidentRayAngle += R6.pi;
+
+		double normal = Math.atan(m) + R6.pi / 2;
+
+		if (!r.pointsPositive())
+			normal += R6.pi;
+		
+		double incidentAngle = normal - incidentRayAngle;
+
+		double reflectedRayAngle = incidentAngle * 2 + incidentRayAngle;
+
+		System.out.println("incident ray angle:" + Math.toDegrees(incidentRayAngle));
+		System.out.println("normal angle:" + Math.toDegrees(normal));
+		System.out.println("incident angle:" + Math.toDegrees(incidentAngle));
+		System.out.println("reflected ray angle:" + Math.toDegrees(reflectedRayAngle));
+
+		if (!r.pointsPositive())
+			reflectedRayAngle += R6.pi;
+
+		return new Ray(Math.tan(reflectedRayAngle), xint, yint, reflectedRayAngle < R6.pi);
 	}
 
 }

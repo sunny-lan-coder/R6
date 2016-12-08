@@ -86,8 +86,9 @@ public class TestWindow {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		
 		try {
-			six.add(new RenderableLightRay(new Ray(1.1, 100, 100, true), Color.RED));
-			six.add(new RenderablePlaneMirror( 50, 100, 0,  Color.blue));
+			six.add(new RenderableLightRay(new Ray(1.1, 100, 200, false), Color.RED));
+//			six.add(new RenderableLightRay(new Ray(1, 50, 50, true), Color.RED));
+			six.add(new RenderablePlaneMirror(50,100,200,  Color.blue));
 			
 		} catch (R6Exception e) {
 			// TODO Auto-generated catch block

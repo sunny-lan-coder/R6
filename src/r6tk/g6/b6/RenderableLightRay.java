@@ -30,6 +30,8 @@ public class RenderableLightRay extends LightRay implements IRenderable {
 			double yend = -1;
 			double xstart = head.x1();
 			double ystart = head.y1();
+			
+			engine.getGfx().fillRect((int)xstart-1, (int)ystart-1, 3, 3);
 
 			if (subray.bounce == null) {
 

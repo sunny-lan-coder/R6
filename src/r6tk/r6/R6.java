@@ -10,6 +10,12 @@ public class R6 {
 	List<ICollideable> transforms;
 	List<IR6Listener> listeners;
 	public final List<Object> objects;
+	public static final double epilison = 0.00000000001;
+	public static final double pi = Math.PI;
+	
+	public static final double normalizeAngle(double angle) {
+	    return Math.atan2(Math.sin(angle), Math.cos(angle));
+	}  
 
 	public R6() {
 		transforms = new ArrayList<>();
@@ -67,7 +73,8 @@ public class R6 {
 			}
 			double dist = Math
 					.sqrt(Math.pow(Math.abs(ray.head.x1() - xint), 2) + Math.pow(Math.abs(ray.head.y1() - yint), 2));
-			if(dist==0)continue;
+			if (dist == 0)
+				continue;
 			if (min == null) {
 				min = object;
 				mindist = dist;
@@ -90,9 +97,9 @@ public class R6 {
 			try {
 				nextRay = findReflection(currentRay);
 			} catch (R6Exception e) {
-				if (e.e == R6Error.no_collision){
+				if (e.e == R6Error.no_collision) {
 					break outer;
-				}	else
+				} else
 					throw new R6Exception(R6Error.friendship_is_magic);
 			}
 			currentRay.bounce = nextRay;
@@ -101,7 +108,7 @@ public class R6 {
 	}
 
 	public void update() throws R6Exception {
-		for (LightRay ray : rays){
+		for (LightRay ray : rays) {
 			trace(ray);
 		}
 

@@ -13,6 +13,8 @@ public class Main {
 		
 		System.out.println(l1.getXInt(r1));
 		System.out.println(l1.getYInt(r1));
+		
+		System.out.println(Math.atan(Double.POSITIVE_INFINITY));
 	}
 
 }
