@@ -242,7 +242,7 @@ public class Ray implements IIntersectable {
 		} else if (r.vertical()) {
 			xint = r.x1;
 		} else {
-			xint = (m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
+			xint = (-m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
 		}
 
 		double yinta = 0;
@@ -343,7 +343,7 @@ public class Ray implements IIntersectable {
 		} else if (r.vertical()) {
 			xint = r.x1;
 		} else {
-			xint = (m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
+			xint = (-m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
 		}
 
 		double yinta = 0;

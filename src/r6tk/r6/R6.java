@@ -10,7 +10,7 @@ public class R6 {
 	List<ICollideable> transforms;
 	List<IR6Listener> listeners;
 	public final List<Object> objects;
-	public static final double epilison = 0.00000000001;
+	public static final double epilison = 0.000001;
 	public static final double pi = Math.PI;
 	
 	public static final double normalizeAngle(double angle) {
@@ -69,11 +69,11 @@ public class R6 {
 				if (e.e == R6Error.no_intersections)
 					continue;
 				else
-					throw new R6Exception(R6Error.friendship_is_magic);
+					throw new R6Exception(R6Error.friendship_is_magic,e);
 			}
 			double dist = Math
 					.sqrt(Math.pow(Math.abs(ray.head.x1() - xint), 2) + Math.pow(Math.abs(ray.head.y1() - yint), 2));
-			if (dist == 0)
+			if (dist< epilison)
 				continue;
 			if (min == null) {
 				min = object;
@@ -100,7 +100,7 @@ public class R6 {
 				if (e.e == R6Error.no_collision) {
 					break outer;
 				} else
-					throw new R6Exception(R6Error.friendship_is_magic);
+					throw new R6Exception(R6Error.friendship_is_magic,e);
 			}
 			currentRay.bounce = nextRay;
 			currentRay = nextRay;
