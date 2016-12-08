@@ -65,11 +65,9 @@ public class Ray implements IIntersectable {
 		try {
 			return y(0);
 		} catch (R6Exception e) {
-			if (e.e == R6Error.infinite_solutions)
+			if (e.e == R6Error.infinite_outputs)
 				throw new R6Exception(R6Error.infinite_intercepts, e);
-			else if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_intercepts, e);
-			else if (e.e == R6Error.no_solutions)
+			else if (e.e == R6Error.no_outputs)
 				throw new R6Exception(R6Error.no_intercepts, e);
 			else
 				throw e;
@@ -119,24 +117,20 @@ public class Ray implements IIntersectable {
 	 * @throws R6Exception
 	 */
 	public double x(double y) throws R6Exception {
-		
+		if (m == 0)
+			if (y == y1)
+				throw new R6Exception(R6Error.infinite_outputs);
+			else
+				throw new R6Exception(R6Error.no_outputs);
 		if (pointsPositive ^ (m < 0)) {
 			if (y > y1)
-				throw new R6Exception(R6Error.not_on_line);
-		}else if(m==0){
-			
-		}
-		else {
+				throw new R6Exception(R6Error.no_outputs);
+		} else {
 			if (y < y1)
-				throw new R6Exception(R6Error.not_on_line);
+				throw new R6Exception(R6Error.no_outputs);
 		}
 		if (vertical)
 			return x1;
-		if (m == 0)
-			if (y == y1)
-				throw new R6Exception(R6Error.infinite_solutions);
-			else
-				throw new R6Exception(R6Error.no_solutions);
 
 		return (y - y1) / m + x1;
 	}
@@ -152,16 +146,16 @@ public class Ray implements IIntersectable {
 	public double y(double x) throws R6Exception {
 		if (vertical)
 			if (x == x1)
-				throw new R6Exception(R6Error.infinite_solutions);
+				throw new R6Exception(R6Error.infinite_outputs);
 			else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_outputs);
 
 		if (pointsPositive) {
-			if (x < x1)
-				throw new R6Exception(R6Error.not_on_line);
-		} else {
 			if (x > x1)
-				throw new R6Exception(R6Error.not_on_line);
+				throw new R6Exception(R6Error.no_outputs);
+		} else {
+			if (x < x1)
+				throw new R6Exception(R6Error.no_outputs);
 		}
 
 		return m * (x - x1) + y1;
@@ -177,45 +171,59 @@ public class Ray implements IIntersectable {
 		double xint;
 
 		// if parallel
-		if (r.m() == m) {
-			if (r.b() == b())
-
-				if (pointsPositive) {
-					if (r.y1() > y1)
-						throw new R6Exception(R6Error.infinite_solutions);
-					else if (r.y1() < y1)
-						throw new R6Exception(R6Error.no_solutions);
-					else
-						return x1;
-
-				} else {
-					if (r.y1() < y1)
-						throw new R6Exception(R6Error.infinite_solutions);
-					else if (r.y1() > y1)
-						throw new R6Exception(R6Error.no_solutions);
-					else
-						return x1;
-				}
-
-			else
-				throw new R6Exception(R6Error.no_solutions);
-		}
 		if (r.vertical() && vertical) {
 			if (r.x1() == x1) {
 				if (pointsPositive) {
+					if (r.pointsPositive())
+						throw new R6Exception(R6Error.infinite_intersections);
+
 					if (r.y1() > y1)
-						throw new R6Exception(R6Error.infinite_solutions);
-					if (r.y1() < y1)
-						throw new R6Exception(R6Error.no_solutions);
+						throw new R6Exception(R6Error.infinite_intersections);
+					else if (r.y1() < y1)
+						throw new R6Exception(R6Error.no_intersections);
+
+					return x1;
 
 				} else {
+					if (!r.pointsPositive())
+						throw new R6Exception(R6Error.infinite_intersections);
+
 					if (r.y1() < y1)
-						throw new R6Exception(R6Error.infinite_solutions);
-					if (r.y1() > y1)
-						throw new R6Exception(R6Error.no_solutions);
+						throw new R6Exception(R6Error.infinite_intersections);
+					else if (r.y1() > y1)
+						throw new R6Exception(R6Error.no_intersections);
+
+					return x1;
 				}
 			} else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_intersections);
+		}
+		if (r.m() == m) {
+			if (r.b() == b())
+				if (pointsPositive) {
+					if (r.pointsPositive())
+						throw new R6Exception(R6Error.infinite_intersections);
+
+					if (r.x1() > x1)
+						throw new R6Exception(R6Error.infinite_intersections);
+					else if (r.x1() < x1)
+						throw new R6Exception(R6Error.no_intersections);
+
+					return x1;
+
+				} else {
+					if (!r.pointsPositive())
+						throw new R6Exception(R6Error.infinite_intersections);
+
+					if (r.x1() < x1)
+						throw new R6Exception(R6Error.infinite_intersections);
+					else if (r.x1() > x1)
+						throw new R6Exception(R6Error.no_intersections);
+
+					return x1;
+				}
+			else
+				throw new R6Exception(R6Error.no_intersections);
 		}
 
 		if (vertical) {
@@ -235,15 +243,15 @@ public class Ray implements IIntersectable {
 			yinta = y(xint);
 			aflag = true;
 		} catch (R6Exception e) {
-			if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_solutions, e);
+			if (e.e == R6Error.no_outputs)
+				throw new R6Exception(R6Error.no_intersections, e);
 		}
 		try {
 			yintb = r.y(xint);
 			bflag = true;
 		} catch (R6Exception e) {
-			if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_solutions, e);
+			if (e.e == R6Error.no_outputs)
+				throw new R6Exception(R6Error.no_intersections, e);
 		}
 
 		if (aflag && bflag)
@@ -264,51 +272,65 @@ public class Ray implements IIntersectable {
 		double xint;
 
 		// if parallel
-		if (r.m() == m) {
-			if (r.b() == b())
-
-				if (pointsPositive) {
-					if (r.y1() > y1)
-						throw new R6Exception(R6Error.infinite_solutions);
-					else if (r.y1() < y1)
-						throw new R6Exception(R6Error.no_solutions);
-					else
-						return y1;
-
-				} else {
-					if (r.y1() < y1)
-						throw new R6Exception(R6Error.infinite_solutions);
-					else if (r.y1() > y1)
-						throw new R6Exception(R6Error.no_solutions);
-					else
-						return y1;
-				}
-
-			else
-				throw new R6Exception(R6Error.no_solutions);
-		}
 		if (r.vertical() && vertical) {
 			if (r.x1() == x1) {
 				if (pointsPositive) {
+					if (r.pointsPositive())
+						throw new R6Exception(R6Error.infinite_intersections);
+
 					if (r.y1() > y1)
-						throw new R6Exception(R6Error.infinite_solutions);
-					if (r.y1() < y1)
-						throw new R6Exception(R6Error.no_solutions);
+						throw new R6Exception(R6Error.infinite_intersections);
+					else if (r.y1() < y1)
+						throw new R6Exception(R6Error.no_intersections);
+
+					return y1;
 
 				} else {
+					if (!r.pointsPositive())
+						throw new R6Exception(R6Error.infinite_intersections);
+
 					if (r.y1() < y1)
-						throw new R6Exception(R6Error.infinite_solutions);
-					if (r.y1() > y1)
-						throw new R6Exception(R6Error.no_solutions);
+						throw new R6Exception(R6Error.infinite_intersections);
+					else if (r.y1() > y1)
+						throw new R6Exception(R6Error.no_intersections);
+
+					return y1;
 				}
 			} else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_intersections);
+		}
+		if (r.m() == m) {
+			if (r.b() == b())
+				if (pointsPositive) {
+					if (r.pointsPositive())
+						throw new R6Exception(R6Error.infinite_intersections);
+
+					if (r.x1() > x1)
+						throw new R6Exception(R6Error.infinite_intersections);
+					else if (r.x1() < x1)
+						throw new R6Exception(R6Error.no_intersections);
+
+					return y1;
+
+				} else {
+					if (!r.pointsPositive())
+						throw new R6Exception(R6Error.infinite_intersections);
+
+					if (r.x1() < x1)
+						throw new R6Exception(R6Error.infinite_intersections);
+					else if (r.x1() > x1)
+						throw new R6Exception(R6Error.no_intersections);
+
+					return y1;
+				}
+			else
+				throw new R6Exception(R6Error.no_intersections);
 		}
 
 		if (vertical) {
 			xint = x1;
 		} else if (r.vertical()) {
-			xint = r.x1();
+			xint = r.x1;
 		} else {
 			xint = (m * x1 + y1 + r.m() * r.x1() - r.y1()) / (r.m() - m);
 		}
@@ -322,18 +344,15 @@ public class Ray implements IIntersectable {
 			yinta = y(xint);
 			aflag = true;
 		} catch (R6Exception e) {
-			if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_solutions, e);
-			// else
-			// throw new LineException(Error.friendship_is_magic, e);
+			if (e.e == R6Error.no_outputs)
+				throw new R6Exception(R6Error.no_intersections, e);
 		}
 		try {
 			yintb = r.y(xint);
 			bflag = true;
 		} catch (R6Exception e) {
-			if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_solutions, e);
-			// throw new LineException(Error.friendship_is_magic, e);
+			if (e.e == R6Error.no_outputs)
+				throw new R6Exception(R6Error.no_intersections, e);
 		}
 
 		if (aflag && bflag)

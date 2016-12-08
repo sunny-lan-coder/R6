@@ -24,7 +24,7 @@ public class PlaneMirror extends Line implements ICollideable {
 			yint = getYInt(r);
 			xint = getXInt(r);
 		} catch (R6Exception e) {
-			if (e.e == R6Error.no_solutions)
+			if (e.e == R6Error.no_intersections)
 				throw new R6Exception(R6Error.no_collision);
 			else
 				throw new R6Exception(R6Error.friendship_is_magic);

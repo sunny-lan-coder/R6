@@ -31,54 +31,74 @@ public class RenderableLightRay extends LightRay implements IRenderable {
 			double xstart = head.x1();
 			double ystart = head.y1();
 
-			if (bounce == null) {
+			if (subray.bounce == null) {
+
+//				System.out.println("side");
 
 				// left side
 				try {
 					double ytmp = head.y(0);
-					if (ytmp >= 0 && ytmp <= engine.height())
+					
+					if (ytmp >= 0 && ytmp <= engine.height()) {
+//						System.out.println("left");
 						yend = ytmp;
+						xend = 0;
+					}
+//					System.out.println(ytmp);
 				} catch (R6Exception e) {
-					if (e.e != R6Error.not_on_line)
+					if (e.e != R6Error.no_outputs)
 						e.printStackTrace();
 				}
 
 				// right side
 				try {
 					double ytmp = head.y(engine.width());
-					if (ytmp >= 0 && ytmp <= engine.height())
+					if (ytmp >= 0 && ytmp <= engine.height()) {
 						yend = ytmp;
+						xend = engine.width();
+//						System.out.println("right");
+					}
+//					System.out.println(ytmp);
 				} catch (R6Exception e) {
-					if (e.e != R6Error.not_on_line)
+					if (e.e != R6Error.no_outputs)
 						e.printStackTrace();
 				}
 
-				// left side
+				// top side
 				try {
 					double xtmp = head.x(0);
-					if (xtmp >= 0 && xtmp <= engine.width())
+					if (xtmp >= 0 && xtmp <= engine.width()) {
 						xend = xtmp;
+						yend = 0;
+
+//						System.out.println("top");
+					}
+//					System.out.println(xtmp);
 				} catch (R6Exception e) {
-					if (e.e != R6Error.not_on_line)
+					if (e.e != R6Error.no_outputs)
 						e.printStackTrace();
 				}
 
-				// right side
+				// bottom side
 				try {
 					double xtmp = head.x(engine.height());
-					if (xtmp >= 0 && xtmp <= engine.width())
+					if (xtmp >= 0 && xtmp <= engine.width()) {
 						xend = xtmp;
+						yend = engine.height();
+//						System.out.println("bottom");
+					}
+//					System.out.println(xtmp);
 				} catch (R6Exception e) {
-					if (e.e != R6Error.not_on_line)
+					if (e.e != R6Error.no_outputs)
 						e.printStackTrace();
 				}
 
 			} else {
-				xend = bounce.head.x1();
-				yend = bounce.head.y1();
+				xend = subray.bounce.head.x1();
+				yend = subray.bounce.head.y1();
 
 			}
-			System.out.println(yend);
+//			System.out.println(yend);
 			engine.getGfx().drawLine((int) xstart, (int) ystart, (int) xend, (int) yend);
 			subray = subray.bounce;
 		}

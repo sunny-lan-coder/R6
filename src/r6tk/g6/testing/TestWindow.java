@@ -1,4 +1,4 @@
-package r6tk.g6;
+package r6tk.g6.testing;
 
 import java.awt.EventQueue;
 import java.awt.Graphics;
@@ -6,8 +6,10 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import r6tk.g6.G6;
 import r6tk.g6.b6.RenderableLightRay;
 import r6tk.g6.b6.RenderablePlaneMirror;
+import r6tk.r6.IR6Listener;
 import r6tk.r6.R6;
 import r6tk.r6.R6Exception;
 import r6tk.r6.geom.Ray;
@@ -53,6 +55,8 @@ public class TestWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		R6 six=new R6();
+
+		engine=new G6(six,450, 300);
 		
 		JPanel panel = new JPanel(){
 
@@ -67,12 +71,22 @@ public class TestWindow {
 				engine.render(g);
 			}
 		};
+		
+		
 		panel.setBackground(Color.black);
 		
-		engine=new G6(six,panel.getHeight(), panel.getWidth());
+		six.add(new IR6Listener() {
+			
+			@Override
+			public void update() {
+				panel.repaint();
+			}
+		});
+
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		
 		try {
-			six.add(new RenderableLightRay(new Ray(1, 100, 100, true), Color.RED));
+			six.add(new RenderableLightRay(new Ray(1.5, 100, 100, true), Color.RED));
 			six.add(new RenderablePlaneMirror( 50, 100, 0,  Color.blue));
 			
 		} catch (R6Exception e) {
@@ -82,7 +96,6 @@ public class TestWindow {
 		
 		
 		
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
 	}
 
 }

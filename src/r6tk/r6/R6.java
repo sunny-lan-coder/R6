@@ -19,7 +19,6 @@ public class R6 {
 	}
 
 	public void add(LightRay ray) throws R6Exception {
-		System.out.println("c");
 		rays.add(ray);
 		objects.add(ray);
 		update();
@@ -61,7 +60,7 @@ public class R6 {
 				xint = object.getXInt(ray.head);
 				yint = object.getYInt(ray.head);
 			} catch (R6Exception e) {
-				if (e.e == R6Error.no_solutions)
+				if (e.e == R6Error.no_intersections)
 					continue;
 				else
 					throw new R6Exception(R6Error.friendship_is_magic);
@@ -92,7 +91,6 @@ public class R6 {
 				nextRay = findReflection(currentRay);
 			} catch (R6Exception e) {
 				if (e.e == R6Error.no_collision){
-					System.out.println("b");
 					break outer;
 				}	else
 					throw new R6Exception(R6Error.friendship_is_magic);
@@ -104,7 +102,6 @@ public class R6 {
 
 	public void update() throws R6Exception {
 		for (LightRay ray : rays){
-			System.out.println("a");
 			trace(ray);
 		}
 

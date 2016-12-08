@@ -65,14 +65,12 @@ public class Line implements IIntersectable {
 		try {
 			return y(0);
 		} catch (R6Exception e) {
-			if (e.e == R6Error.infinite_solutions)
+			if (e.e == R6Error.infinite_outputs)
 				throw new R6Exception(R6Error.infinite_intercepts, e);
-			else if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_intercepts, e);
-			else if (e.e == R6Error.no_solutions)
+			else if (e.e == R6Error.no_outputs)
 				throw new R6Exception(R6Error.no_intercepts, e);
 			else
-				throw e;
+				throw new R6Exception(R6Error.friendship_is_magic, e);
 		}
 	}
 
@@ -128,18 +126,18 @@ public class Line implements IIntersectable {
 	public double x(double y) throws R6Exception {
 
 		if (y < Math.min(y1, y2))
-			throw new R6Exception(R6Error.not_on_line);
+			throw new R6Exception(R6Error.no_outputs);
 
 		if (y > Math.max(y1, y2))
-			throw new R6Exception(R6Error.not_on_line);
+			throw new R6Exception(R6Error.no_outputs);
 
 		if (vertical)
 			return x1;
 		if (m == 0)
 			if (y == y1)
-				throw new R6Exception(R6Error.infinite_solutions);
+				throw new R6Exception(R6Error.infinite_outputs);
 			else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_outputs);
 		return (y - y1) / m + x1;
 	}
 
@@ -153,16 +151,16 @@ public class Line implements IIntersectable {
 	 */
 	public double y(double x) throws R6Exception {
 		if (x < Math.min(x1, x2))
-			throw new R6Exception(R6Error.not_on_line);
+			throw new R6Exception(R6Error.no_outputs);
 
 		if (x > Math.max(x1, x2))
-			throw new R6Exception(R6Error.not_on_line);
+			throw new R6Exception(R6Error.no_outputs);
 
 		if (vertical)
 			if (x == x1)
-				throw new R6Exception(R6Error.infinite_solutions);
+				throw new R6Exception(R6Error.infinite_outputs);
 			else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_outputs);
 
 		return m * (x - x1) + y1;
 	}
@@ -180,22 +178,22 @@ public class Line implements IIntersectable {
 		if (r.m() == m) {
 			if (r.b() == b()) {
 				if (Math.min(y1, y2) < r.y1() && Math.max(y1, y2) > r.y1())
-					throw new R6Exception(R6Error.infinite_solutions);
+					throw new R6Exception(R6Error.infinite_intercepts);
 				if (Math.min(y1, y2) > r.y1() && Math.max(y1, y2) < r.y1())
-					throw new R6Exception(R6Error.no_solutions);
+					throw new R6Exception(R6Error.no_intersections);
 				return x1;
 			} else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_intersections);
 		}
 		if (r.vertical() && vertical) {
 			if (r.x1() == x1) {
 				if (Math.min(y1, y2) < r.y1() && Math.max(y1, y2) > r.y1())
-					throw new R6Exception(R6Error.infinite_solutions);
+					throw new R6Exception(R6Error.infinite_intercepts);
 				if (Math.min(y1, y2) > r.y1() && Math.max(y1, y2) < r.y1())
-					throw new R6Exception(R6Error.no_solutions);
+					throw new R6Exception(R6Error.no_intersections);
 				return x1;
 			} else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_intersections);
 		}
 
 		if (vertical) {
@@ -215,15 +213,15 @@ public class Line implements IIntersectable {
 			yinta = y(xint);
 			aflag = true;
 		} catch (R6Exception e) {
-			if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_solutions, e);
+			if (e.e == R6Error.no_outputs)
+				throw new R6Exception(R6Error.no_intersections, e);
 		}
 		try {
 			yintb = r.y(xint);
 			bflag = true;
 		} catch (R6Exception e) {
-			if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_solutions, e);
+			if (e.e == R6Error.no_outputs)
+				throw new R6Exception(R6Error.no_intersections, e);
 		}
 
 		if (aflag && bflag)
@@ -247,22 +245,22 @@ public class Line implements IIntersectable {
 		if (r.m() == m) {
 			if (r.b() == b()) {
 				if (Math.min(y1, y2) < r.y1() && Math.max(y1, y2) > r.y1())
-					throw new R6Exception(R6Error.infinite_solutions);
+					throw new R6Exception(R6Error.infinite_intercepts);
 				if (Math.min(y1, y2) > r.y1() && Math.max(y1, y2) < r.y1())
-					throw new R6Exception(R6Error.no_solutions);
+					throw new R6Exception(R6Error.no_intersections);
 				return y1;
 			} else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_intersections);
 		}
 		if (r.vertical() && vertical) {
 			if (r.x1() == x1) {
 				if (Math.min(y1, y2) < r.y1() && Math.max(y1, y2) > r.y1())
-					throw new R6Exception(R6Error.infinite_solutions);
+					throw new R6Exception(R6Error.infinite_intercepts);
 				if (Math.min(y1, y2) > r.y1() && Math.max(y1, y2) < r.y1())
-					throw new R6Exception(R6Error.no_solutions);
+					throw new R6Exception(R6Error.no_intersections);
 				return y1;
 			} else
-				throw new R6Exception(R6Error.no_solutions);
+				throw new R6Exception(R6Error.no_intersections);
 		}
 
 		if (vertical) {
@@ -282,15 +280,15 @@ public class Line implements IIntersectable {
 			yinta = y(xint);
 			aflag = true;
 		} catch (R6Exception e) {
-			if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_solutions, e);
+			if (e.e == R6Error.no_outputs)
+				throw new R6Exception(R6Error.no_intersections, e);
 		}
 		try {
 			yintb = r.y(xint);
 			bflag = true;
 		} catch (R6Exception e) {
-			if (e.e == R6Error.not_on_line)
-				throw new R6Exception(R6Error.no_solutions, e);
+			if (e.e == R6Error.no_outputs)
+				throw new R6Exception(R6Error.no_intersections, e);
 		}
 
 		if (aflag && bflag)
