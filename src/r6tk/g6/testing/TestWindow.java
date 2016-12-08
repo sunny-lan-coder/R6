@@ -20,6 +20,7 @@ import java.awt.Color;
 public class TestWindow {
 
 	private JFrame frame;
+	private static JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -30,6 +31,18 @@ public class TestWindow {
 				try {
 					TestWindow window = new TestWindow();
 					window.frame.setVisible(true);
+//					RenderableLightRay r;
+//					for(int i=0;i<360;i++){
+//						r=new RenderableLightRay(new Ray(Math.tan(i), 100, 200, false), Color.RED);
+//						six.add(r);
+//						panel.repaint();
+//						try {
+//							Thread.sleep(100);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+//						six.remove(r);
+//					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -45,20 +58,21 @@ public class TestWindow {
 	}
 
 	private G6 engine;
+	private static R6 six;
 	
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 640, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		R6 six=new R6();
+		six=new R6();
 
-		engine=new G6(six,450, 300);
+		engine=new G6(six,640, 480);
 		
-		JPanel panel = new JPanel(){
+		 panel = new JPanel(){
 
 			/**
 			 * 
@@ -86,8 +100,20 @@ public class TestWindow {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		
 		try {
-			six.add(new RenderableLightRay(new Ray(1.1, 100, 100, true), Color.RED));
-			six.add(new RenderablePlaneMirror( 50, 100, 0,  Color.blue));
+//		for(int i=280;i<=360;i+=10){
+//			double a=-10;
+//			six.add(new RenderableLightRay(new Ray(1,50.0, 150.0,true), Color.RED));
+//		}
+						six.add(new RenderablePlaneMirror(-0.5,0,150,200,  Color.blue));
+						six.add(new RenderablePlaneMirror(0,0,300,400, Color.GREEN));
+						six.add(new RenderablePlaneMirror(200, 0, 400, Color.blue));
+						
+//						for(int i=0;i<360;i+=10){
+							RenderableLightRay r=new RenderableLightRay(new Ray(Math.tan(100), 300, 200, false), Color.RED);
+				six.add(r);
+							 r=new RenderableLightRay(new Ray(Math.tan(20), 110, 200, false), Color.RED);
+							six.add(r);
+//						}
 			
 		} catch (R6Exception e) {
 			// TODO Auto-generated catch block
