@@ -12,10 +12,20 @@ public class R6 {
 	public final List<Object> objects;
 	public static final double epilison = 0.000001;
 	public static final double pi = Math.PI;
-	
+
 	public static final double normalizeAngle(double angle) {
-	    return Math.atan2(Math.sin(angle), Math.cos(angle));
-	}  
+		return Math.atan2(Math.sin(angle), Math.cos(angle));
+	}
+
+	public static final boolean inBetween(double start, double end, double a) {
+		end -= start;
+		a -= start;
+		if (end < 0)
+			end += R6.pi * 2;
+		if (a < 0)
+			a += R6.pi * 2;
+		return a <= end;
+	}
 
 	public R6() {
 		transforms = new ArrayList<>();
@@ -69,11 +79,11 @@ public class R6 {
 				if (e.e == R6Error.no_intersections)
 					continue;
 				else
-					throw new R6Exception(R6Error.friendship_is_magic,e);
+					throw new R6Exception(R6Error.friendship_is_magic, e);
 			}
 			double dist = Math
 					.sqrt(Math.pow(Math.abs(ray.head.x1() - xint), 2) + Math.pow(Math.abs(ray.head.y1() - yint), 2));
-			if (dist< epilison)
+			if (dist < epilison)
 				continue;
 			if (min == null) {
 				min = object;
@@ -100,7 +110,7 @@ public class R6 {
 				if (e.e == R6Error.no_collision) {
 					break outer;
 				} else
-					throw new R6Exception(R6Error.friendship_is_magic,e);
+					throw new R6Exception(R6Error.friendship_is_magic, e);
 			}
 			currentRay.bounce = nextRay;
 			currentRay = nextRay;
