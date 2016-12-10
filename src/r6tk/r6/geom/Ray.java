@@ -56,16 +56,6 @@ public class Ray implements IIntersectable {
 		return theta;
 	}
 
-	public double angle() {
-		double theta = Math.atan(m);
-
-		if (!pointsPositive)
-			theta += R6.pi;
-
-		theta = R6.normalizeAngle(theta);
-		return theta;
-	}
-
 	/**
 	 * Construct vertical ray
 	 * 
