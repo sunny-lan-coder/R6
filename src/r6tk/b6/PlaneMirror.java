@@ -40,14 +40,7 @@ public class PlaneMirror extends Line implements ICollideable {
 		//// System.out.println("side 2");
 		// }
 
-		double incidentRayAngle = Math.atan(r.m());
-
-		if (!r.pointsPositive())
-			incidentRayAngle += R6.pi;
-
-		incidentRayAngle = R6.normalizeAngle(incidentRayAngle);
-		// if (incidentRayAngle < 0)
-		// incidentRayAngle += R6.pi;
+		double incidentRayAngle = r.angle();
 
 		if (!(normal > 90 && normal < 270))
 			incidentRayAngle += R6.pi;

@@ -37,6 +37,16 @@ public class R6 {
 		return Math.atan2(Math.sin(angle), Math.cos(angle));
 	}
 
+	public static final boolean inBetween(double start, double end, double a) {
+		end -= start;
+		a -= start;
+		if (end < 0)
+			end += R6.pi * 2;
+		if (a < 0)
+			a += R6.pi * 2;
+		return a <= end;
+	}
+
 	public R6() {
 		transforms = new ArrayList<>();
 		rays = new ArrayList<>();
