@@ -45,8 +45,8 @@ public class Ray implements IIntersectable {
 		}
 
 	}
-	
-	public double angle(){
+
+	public double angle() {
 		double theta = Math.atan(m);
 
 		if (!pointsPositive)
@@ -80,19 +80,9 @@ public class Ray implements IIntersectable {
 	/**
 	 * 
 	 * @return y-intercept of ray
-	 * @throws R6Exception
 	 */
-	public double b() throws R6Exception {
-		try {
-			return y(0);
-		} catch (R6Exception e) {
-			if (e.e == R6Error.infinite_outputs)
-				throw new R6Exception(R6Error.infinite_intercepts, e);
-			else if (e.e == R6Error.no_outputs)
-				throw new R6Exception(R6Error.no_intercepts, e);
-			else
-				throw e;
-		}
+	public double b() {
+		return m*(0-x1)+y1;
 	}
 
 	/**
