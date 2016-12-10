@@ -25,8 +25,8 @@ public class ConcaveMirror extends Arc implements ICollideable {
 			else
 				throw new R6Exception(R6Error.friendship_is_magic);
 		}
-		
-		System.out.println(xint+","+yint);
+//		
+//		System.out.println(xint+","+yint);
 
 		double opposite = Math.abs(r.x1() - y);
 		double adjacent = Math.abs(r.y1() - x);
@@ -64,7 +64,7 @@ public class ConcaveMirror extends Arc implements ICollideable {
 
 		// System.out.println("incident ray angle:" +
 		// Math.toDegrees(incidentRayAngle));
-		 System.out.println("normal angle:" + Math.toDegrees(normal));
+//		 System.out.println("normal angle:" + Math.toDegrees(normal));
 		// System.out.println("incident angle:" +
 		// Math.toDegrees(incidentAngle));
 		// System.out.println("reflected ray angle:" +

@@ -68,7 +68,7 @@ public class TestWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		RenderableConcaveMirror mycon = new RenderableConcaveMirror(400, 200, 100, 0, R6.pi, Color.black);
+		RenderableConcaveMirror mycon = new RenderableConcaveMirror(400, 300, 100, R6.pi, R6.pi*2, Color.black);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 640, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
