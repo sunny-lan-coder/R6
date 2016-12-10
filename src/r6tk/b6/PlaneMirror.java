@@ -39,6 +39,8 @@ public class PlaneMirror extends Line implements ICollideable {
 		// } else {
 		//// System.out.println("side 2");
 		// }
+		
+	
 
 		double incidentRayAngle = r.angle();
 
@@ -48,7 +50,6 @@ public class PlaneMirror extends Line implements ICollideable {
 		double incidentAngle = Math.abs(normal - incidentRayAngle);
 		if(R6.e(incidentAngle, 90))
 			throw new R6Exception(R6Error.no_collision);
-			
 
 		if (incidentRayAngle > normal)
 			incidentAngle = -incidentAngle;
@@ -63,7 +64,7 @@ public class PlaneMirror extends Line implements ICollideable {
 
 		// System.out.println("incident ray angle:" +
 		// Math.toDegrees(incidentRayAngle));
-		// System.out.println("normal angle:" + Math.toDegrees(normal));
+//		 System.out.println("normal angle:" + Math.toDegrees(normal));
 		// System.out.println("incident angle:" +
 		// Math.toDegrees(incidentAngle));
 		// System.out.println("reflected ray angle:" +
