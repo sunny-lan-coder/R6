@@ -3,10 +3,15 @@ package r6tk.b6;
 import r6tk.r6.ICollideable;
 import r6tk.r6.R6;
 import r6tk.r6.R6Exception;
+import r6tk.r6.geom.Arc;
 import r6tk.r6.geom.R6Error;
 import r6tk.r6.geom.Ray;
 
-public class ConcaveMirror implements ICollideable{
+public class ConcaveMirror extends Arc implements ICollideable {
+	public ConcaveMirror(double x, double y, double c, double astart, double aend, boolean major) {
+		super(x, y, c, astart, aend, major);
+	}
+
 	@Override
 	public Ray applyTransformation(Ray r) throws R6Exception {
 		double xint;
@@ -21,11 +26,16 @@ public class ConcaveMirror implements ICollideable{
 				throw new R6Exception(R6Error.friendship_is_magic);
 		}
 
-		double normal = Math.atan(m) + R6.pi / 2;
+		double opposite = Math.abs(yint - y);
+		double adjacent = Math.abs(xint - x);
+		double normal = Math.atan(opposite / adjacent);
 
-		if (((x1 - x2) * (r.y1() - y2) - (y1 - y2) * (r.x1() - x2)) > 0)
+		double dist = Math.sqrt(opposite * opposite + adjacent * adjacent);
+		if (R6.g(this.r, dist))
 			// { System.out.println("side 1");
 			normal += R6.pi;
+		else if (R6.e(this.r, dist))
+			throw new R6Exception(R6Error.no_collision);
 		// } else {
 		//// System.out.println("side 2");
 		// }
