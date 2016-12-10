@@ -112,7 +112,7 @@ public class TestWindow {
 //						for(int i=0;i<360;i+=10){
 							RenderableLightRay r=new RenderableLightRay(new Ray(Math.tan(100), 300, 200, false), Color.RED);
 				six.add(r);
-							 r=new RenderableLightRay(new Ray(Math.tan(20), 110, 200, false), Color.RED);
+							 r=new RenderableLightRay(new Ray(Math.tan(100), 110, 200, true), Color.RED);
 							six.add(r);
 //						}
 			
