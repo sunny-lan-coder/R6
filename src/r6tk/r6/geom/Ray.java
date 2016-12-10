@@ -209,6 +209,7 @@ public class Ray implements IIntersectable {
 			} else
 				throw new R6Exception(R6Error.no_intersections);
 		}
+		
 		if (r.m() == m) {
 			if (r.b() == b())
 				if (pointsPositive) {
@@ -266,7 +267,7 @@ public class Ray implements IIntersectable {
 		}
 
 		if (aflag && bflag)
-			if (Math.abs(yinta - yintb) > R6.epilison)
+			if (!R6.e(yinta, yintb))
 				throw new R6Exception(R6Error.friendship_is_magic);
 
 		if (aflag)
@@ -367,7 +368,7 @@ public class Ray implements IIntersectable {
 		}
 
 		if (aflag && bflag)
-			if (Math.abs(yinta - yintb) > R6.epilison)
+			if (R6.e(yinta, yintb))
 				throw new R6Exception(R6Error.friendship_is_magic);
 
 		if (aflag)

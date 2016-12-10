@@ -13,23 +13,23 @@ public class R6 {
 	public static final double epilison = 0.000001;
 	public static final double pi = Math.PI;
 
-	public boolean e(double a, double b) {
+	public static boolean e(double a, double b) {
 		return Math.abs(a - b) < epilison;
 	}
 
-	public boolean g(double a, double b) {
+	public static boolean g(double a, double b) {
 		return a > b && !e(a, b);
 	}
 
-	public boolean l(double a, double b) {
+	public static boolean l(double a, double b) {
 		return a < b && !e(a, b);
 	}
 
-	public boolean ge(double a, double b) {
+	public static boolean ge(double a, double b) {
 		return g(a, b) || e(a, b);
 	}
 
-	public boolean le(double a, double b) {
+	public static boolean le(double a, double b) {
 		return l(a, b) || e(a, b);
 	}
 

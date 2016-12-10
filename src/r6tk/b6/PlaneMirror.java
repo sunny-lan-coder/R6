@@ -53,6 +53,9 @@ public class PlaneMirror extends Line implements ICollideable {
 			incidentRayAngle += R6.pi;
 
 		double incidentAngle = Math.abs(normal - incidentRayAngle);
+		if(R6.e(incidentAngle, 90))
+			throw new R6Exception(R6Error.no_collision);
+			
 
 		if (incidentRayAngle > normal)
 			incidentAngle = -incidentAngle;
