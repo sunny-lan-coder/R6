@@ -12,10 +12,30 @@ public class R6 {
 	public final List<Object> objects;
 	public static final double epilison = 0.000001;
 	public static final double pi = Math.PI;
-	
+
+	public boolean e(double a, double b) {
+		return Math.abs(a - b) < epilison;
+	}
+
+	public boolean g(double a, double b) {
+		return a > b && !e(a, b);
+	}
+
+	public boolean l(double a, double b) {
+		return a < b && !e(a, b);
+	}
+
+	public boolean ge(double a, double b) {
+		return g(a, b) || e(a, b);
+	}
+
+	public boolean le(double a, double b) {
+		return l(a, b) || e(a, b);
+	}
+
 	public static final double normalizeAngle(double angle) {
-	    return Math.atan2(Math.sin(angle), Math.cos(angle));
-	}  
+		return Math.atan2(Math.sin(angle), Math.cos(angle));
+	}
 
 	public R6() {
 		transforms = new ArrayList<>();
@@ -69,11 +89,11 @@ public class R6 {
 				if (e.e == R6Error.no_intersections)
 					continue;
 				else
-					throw new R6Exception(R6Error.friendship_is_magic,e);
+					throw new R6Exception(R6Error.friendship_is_magic, e);
 			}
 			double dist = Math
 					.sqrt(Math.pow(Math.abs(ray.head.x1() - xint), 2) + Math.pow(Math.abs(ray.head.y1() - yint), 2));
-			if (dist< epilison)
+			if (dist < epilison)
 				continue;
 			if (min == null) {
 				min = object;
@@ -100,7 +120,7 @@ public class R6 {
 				if (e.e == R6Error.no_collision) {
 					break outer;
 				} else
-					throw new R6Exception(R6Error.friendship_is_magic,e);
+					throw new R6Exception(R6Error.friendship_is_magic, e);
 			}
 			currentRay.bounce = nextRay;
 			currentRay = nextRay;
