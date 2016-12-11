@@ -45,8 +45,8 @@ public class Ray implements IIntersectable {
 		}
 
 	}
-	
-	public double angle(){
+
+	public double angle() {
 		double theta = Math.atan(m);
 
 		if (!pointsPositive)
@@ -82,7 +82,7 @@ public class Ray implements IIntersectable {
 	 * @return y-intercept of ray
 	 */
 	public double b() {
-		return m*(0-x1)+y1;
+		return m * (0 - x1) + y1;
 	}
 
 	/**
@@ -128,21 +128,29 @@ public class Ray implements IIntersectable {
 	 * @throws R6Exception
 	 */
 	public double x(double y) throws R6Exception {
+		boolean condition;
+		if(vertical)
+			condition=(m==Double.POSITIVE_INFINITY);
+		else
+			condition=(pointsPositive ^ (m < 0));
+		if (condition) {
+			if (R6.le(y, y1))
+				throw new R6Exception(R6Error.no_outputs);
+		} else {
+			if (R6.ge(y, y1))
+				throw new R6Exception(R6Error.no_outputs);
+		}
+		
 		if (m == 0)
 			if (y == y1)
 				throw new R6Exception(R6Error.infinite_outputs);
 			else
 				throw new R6Exception(R6Error.no_outputs);
-		if (pointsPositive ^ (m < 0)) {
-			if (y < y1)
-				throw new R6Exception(R6Error.no_outputs);
-		} else {
-			if (y > y1)
-				throw new R6Exception(R6Error.no_outputs);
-		}
-		if (vertical)
+		
+		if (vertical){
+			
 			return x1;
-
+		}
 		return (y - y1) / m + x1;
 	}
 
@@ -155,17 +163,18 @@ public class Ray implements IIntersectable {
 	 * @throws R6Exception
 	 */
 	public double y(double x) throws R6Exception {
+	
 		if (vertical)
 			if (x == x1)
 				throw new R6Exception(R6Error.infinite_outputs);
 			else
 				throw new R6Exception(R6Error.no_outputs);
-
+		
 		if (pointsPositive) {
-			if (x < x1)
+			if (R6.le(x, x1))
 				throw new R6Exception(R6Error.no_outputs);
 		} else {
-			if (x > x1)
+			if (R6.ge(x, x1))
 				throw new R6Exception(R6Error.no_outputs);
 		}
 
@@ -209,6 +218,7 @@ public class Ray implements IIntersectable {
 			} else
 				throw new R6Exception(R6Error.no_intersections);
 		}
+
 		if (r.m() == m) {
 			if (r.b() == b())
 				if (pointsPositive) {
@@ -266,7 +276,7 @@ public class Ray implements IIntersectable {
 		}
 
 		if (aflag && bflag)
-			if (Math.abs(yinta - yintb) > R6.epilison)
+			if (!R6.e(yinta, yintb))
 				throw new R6Exception(R6Error.friendship_is_magic);
 
 		if (aflag)
@@ -367,7 +377,7 @@ public class Ray implements IIntersectable {
 		}
 
 		if (aflag && bflag)
-			if (Math.abs(yinta - yintb) > R6.epilison)
+			if (R6.e(yinta, yintb))
 				throw new R6Exception(R6Error.friendship_is_magic);
 
 		if (aflag)

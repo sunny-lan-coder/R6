@@ -56,7 +56,7 @@ public class TestWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Arc myarc = new Arc(120, 300, 100, 0, R6.pi);
-		Ray r = new Ray(1,50, 100, true);
+		Ray r = new Ray(3,50, 100, true);
 
 		panel = new JPanel() {
 

@@ -36,16 +36,17 @@ public class PlaneMirror extends Line implements ICollideable {
 		if (((x1 - x2) * (r.y1() - y2) - (y1 - y2) * (r.x1() - x2)) > 0)
 			// { System.out.println("side 1");
 			normal += R6.pi;
+		
 		// } else {
 		//// System.out.println("side 2");
 		// }
 
-		double incidentRayAngle = r.angle();
-
-		if (!(normal > 90 && normal < 270))
-			incidentRayAngle += R6.pi;
+		double incidentRayAngle = R6.angle(xint, yint,r.x1(), r.y1() );
+		incidentRayAngle += R6.pi;
 
 		double incidentAngle = Math.abs(normal - incidentRayAngle);
+		if (R6.e(incidentAngle, R6.pi/2))
+			throw new R6Exception(R6Error.no_collision);
 
 		if (incidentRayAngle > normal)
 			incidentAngle = -incidentAngle;

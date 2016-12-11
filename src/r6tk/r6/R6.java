@@ -10,11 +10,60 @@ public class R6 {
 	List<ICollideable> transforms;
 	List<IR6Listener> listeners;
 	public final List<Object> objects;
-	public static final double epilison = 0.000001;
+	public static final double epilison = 0.00000001;
 	public static final double pi = Math.PI;
+
+	public static boolean e(double a, double b) {
+		return Math.abs(a - b) < epilison;
+	}
+
+	public static boolean g(double a, double b) {
+		return a > b && !e(a, b);
+	}
+
+	public static boolean l(double a, double b) {
+		return a < b && !e(a, b);
+	}
+
+	public static boolean ge(double a, double b) {
+		return g(a, b) || e(a, b);
+	}
+
+	public static boolean le(double a, double b) {
+		return l(a, b) || e(a, b);
+	}
 
 	public static final double normalizeAngle(double angle) {
 		return Math.atan2(Math.sin(angle), Math.cos(angle));
+	}
+
+	public static double ray_m(double x1, double y1, double x2, double y2) {
+		return (y2 - y1) / (x2 - x1);
+	}
+
+	public static boolean ray_pointsPositive(double x1, double y1, double x2, double y2) throws R6Exception {
+		if (e(x2, x1))
+			if (e(y2, y1))
+				throw new R6Exception(R6Error.friendship_is_magic);
+			else
+				return g(y2, y1);
+		return g(x2, x1);
+	}
+
+	public static final double angle(double x1, double y1, double x2, double y2) {
+		double opposite = y1 - y2;
+		double adjacent = x1 - x2;
+		double angle = Math.atan(opposite / adjacent);
+		if (adjacent < 0)
+			angle += R6.pi;
+
+		if (angle < 0)
+			angle += R6.pi * 2;
+		
+		if(angle > R6.pi*2)
+			angle -= R6.pi * 2;
+
+		return angle;
 	}
 
 	public static final boolean inBetween(double start, double end, double a) {
@@ -24,8 +73,18 @@ public class R6 {
 			end += R6.pi * 2;
 		if (a < 0)
 			a += R6.pi * 2;
-		return a <= end;
+		return a < end;
+		
+		
 	}
+//	 public static final boolean inBetween(double max, double max, double targetAngle)
+//	 {
+//	     double normalisedMin = min > 0 ? min : 2 * Math.PI + min;
+//	     double normalisedMax = max > 0 ? max : 2 * Math.PI + max;
+//	     double normalisedTarget = targetAngle > 0 ? targetAngle : 2 * Math.PI + targetAngle;
+//
+//	     return normalisedMin <= normalisedTarget && normalisedTarget <= normalisedMax;
+//	 }
 
 	public R6() {
 		transforms = new ArrayList<>();
@@ -83,7 +142,7 @@ public class R6 {
 			}
 			double dist = Math
 					.sqrt(Math.pow(Math.abs(ray.head.x1() - xint), 2) + Math.pow(Math.abs(ray.head.y1() - yint), 2));
-			if (dist < epilison)
+			if (e(dist , 0))
 				continue;
 			if (min == null) {
 				min = object;
