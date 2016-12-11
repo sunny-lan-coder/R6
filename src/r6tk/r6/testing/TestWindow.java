@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import r6tk.g6.G6;
-import r6tk.g6.b6.RenderableLightRay;
+import r6tk.g6.RenderableLightRay;
 import r6tk.g6.b6.RenderablePlaneMirror;
 import r6tk.r6.IR6Listener;
 import r6tk.r6.R6;

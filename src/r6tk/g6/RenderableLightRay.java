@@ -1,9 +1,7 @@
-package r6tk.g6.b6;
+package r6tk.g6;
 
 import java.awt.Color;
 
-import r6tk.g6.G6;
-import r6tk.g6.IRenderable;
 import r6tk.r6.LightRay;
 import r6tk.r6.R6Exception;
 import r6tk.r6.geom.R6Error;
@@ -31,7 +29,7 @@ public class RenderableLightRay extends LightRay implements IRenderable {
 			double xstart = head.x1();
 			double ystart = head.y1();
 			
-			engine.getGfx().fillRect((int)xstart, (int)ystart, 3, 3);
+			engine.getGfx().fillRect((int)xstart-1, (int)ystart-1, 3, 3);
 
 			if (subray.bounce == null) {
 

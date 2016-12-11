@@ -27,7 +27,7 @@ public class G6 {
 		}
 	}
 
-	public void setHeight(double height, double width) {
+	public void setSize(double height, double width) {
 		this.height = height;
 		this.width = width;
 	}

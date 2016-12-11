@@ -19,7 +19,7 @@ public class RenderableConcaveMirror extends ConcaveMirror implements IRenderabl
 	@Override
 	public void render(G6 engine) {
 		engine.getGfx().setColor(col);
-		engine.getGfx().fillRect((int)x, (int)y, 3, 3);
+		engine.getGfx().fillRect((int)x-1, (int)y-1, 3, 3);
 //		engine.getGfx().fillRect((int)fx, (int)fy, 3, 3);
 		engine.getGfx().drawArc((int) (x() - r()), (int) (y() - r()), (int) r() * 2, (int) r() * 2,
 				(int) Math.toDegrees(aend() - R6.pi), (int) Math.toDegrees(aend() - astart()));
