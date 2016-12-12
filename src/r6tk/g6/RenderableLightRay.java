@@ -28,23 +28,30 @@ public class RenderableLightRay extends LightRay implements IRenderable {
 			double yend = -1;
 			double xstart = head.x1();
 			double ystart = head.y1();
-			
-			engine.getGfx().fillRect((int)xstart-1, (int)ystart-1, 3, 3);
+			double maxdist = -1;
+
+			engine.getGfx().fillRect((int) xstart - 1, (int) ystart - 1, 3, 3);
 
 			if (subray.bounce == null) {
-
-//				System.out.println("side");
+				// System.out.println("side");
 
 				// left side
 				try {
 					double ytmp = head.y(0);
-					
+
 					if (ytmp >= 0 && ytmp <= engine.height()) {
-//						System.out.println("left");
-						yend = ytmp;
-						xend = 0;
+						// System.out.println("left");
+
+						double dist = Math
+								.sqrt(Math.pow(Math.abs(xstart - 0), 2) + Math.pow(Math.abs(ystart - ytmp), 2));
+						if (dist > maxdist) {
+							yend = ytmp;
+							xend = 0;
+							maxdist = dist;
+						}
+
 					}
-//					System.out.println(ytmp);
+					// System.out.println(ytmp);
 				} catch (R6Exception e) {
 					if (e.e != R6Error.no_outputs)
 						e.printStackTrace();
@@ -54,11 +61,16 @@ public class RenderableLightRay extends LightRay implements IRenderable {
 				try {
 					double ytmp = head.y(engine.width());
 					if (ytmp >= 0 && ytmp <= engine.height()) {
-						yend = ytmp;
-						xend = engine.width();
-//						System.out.println("right");
+						double dist = Math.sqrt(
+								Math.pow(Math.abs(xstart - engine.width()), 2) + Math.pow(Math.abs(ystart - ytmp), 2));
+						if (dist > maxdist) {
+							yend = ytmp;
+							xend = engine.width();
+							maxdist = dist;
+						}
+						// System.out.println("right");
 					}
-//					System.out.println(ytmp);
+					// System.out.println(ytmp);
 				} catch (R6Exception e) {
 					if (e.e != R6Error.no_outputs)
 						e.printStackTrace();
@@ -68,12 +80,16 @@ public class RenderableLightRay extends LightRay implements IRenderable {
 				try {
 					double xtmp = head.x(0);
 					if (xtmp >= 0 && xtmp <= engine.width()) {
-						xend = xtmp;
-						yend = 0;
-
-//						System.out.println("top");
+						double dist = Math
+								.sqrt(Math.pow(Math.abs(xstart - xtmp), 2) + Math.pow(Math.abs(ystart - 0), 2));
+						if (dist > maxdist) {
+							xend = xtmp;
+							yend = 0;
+							maxdist = dist;
+						}
+						// System.out.println("top");
 					}
-//					System.out.println(xtmp);
+					// System.out.println(xtmp);
 				} catch (R6Exception e) {
 					if (e.e != R6Error.no_outputs)
 						e.printStackTrace();
@@ -83,11 +99,16 @@ public class RenderableLightRay extends LightRay implements IRenderable {
 				try {
 					double xtmp = head.x(engine.height());
 					if (xtmp >= 0 && xtmp <= engine.width()) {
-						xend = xtmp;
-						yend = engine.height();
-//						System.out.println("bottom");
+						double dist = Math.sqrt(
+								Math.pow(Math.abs(xstart - xtmp), 2) + Math.pow(Math.abs(ystart - engine.height()), 2));
+						if (dist > maxdist) {
+							xend = xtmp;
+							yend = engine.height();
+							maxdist = dist;
+						}
+						// System.out.println("bottom");
 					}
-//					System.out.println(xtmp);
+					// System.out.println(xtmp);
 				} catch (R6Exception e) {
 					if (e.e != R6Error.no_outputs)
 						e.printStackTrace();
@@ -98,8 +119,11 @@ public class RenderableLightRay extends LightRay implements IRenderable {
 				yend = subray.bounce.head.y1();
 
 			}
-//			System.out.println(yend);
-			engine.getGfx().drawLine((int) xstart, (int) ystart, (int) xend, (int) yend);
+			// System.out.println(yend);
+			if (subray.bounce == null && maxdist == -1) {
+			} else
+
+				engine.getGfx().drawLine((int) xstart, (int) ystart, (int) xend, (int) yend);
 			subray = subray.bounce;
 		}
 	}
