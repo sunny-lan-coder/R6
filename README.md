@@ -1,2 +1,4 @@
 # R6
-Simple framework for ray tracing
+Simulates lasers with proper optics.
+
+Currently only supports flat and circular mirrors.
